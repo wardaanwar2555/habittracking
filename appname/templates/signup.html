@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Habit Tracker</title>
+    <link rel="stylesheet" href="auth.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+    :root {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --accent: rgb(40, 175, 248);
+    --success: #22c55e;
+    --error: #ef4444;
+    --border-radius: 8px;
+    --gradient: linear-gradient(135deg,  rgb(40, 175, 248),  rgb(40, 175, 248));
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+}
+
+.split-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.left-panel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.right-panel {
+    flex: 1;
+    background: var(--gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 440px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.logo-icon {
+    font-size: 2.5rem;
+    color: var(--accent);
+}
+
+.logo-container h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.auth-card {
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.auth-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.input-icon-wrapper {
+    position: relative;
+}
+
+.input-icon-wrapper i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+}
+
+.input-icon-wrapper input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid #333;
+    border-radius: var(--border-radius);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: all 0.2s;
+}
+
+.input-icon-wrapper input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+}
+
+.btn {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: var(--gradient);
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.social-login {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.social-login p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.social-login p::before,
+.social-login p::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    height: 1px;
+    background-color: #333;
+}
+
+.social-login p::before {
+    left: 0;
+}
+
+.social-login p::after {
+    right: 0;
+}
+
+.social-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.social-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #333;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.social-btn:hover {
+    background-color: var(--bg-primary);
+    transform: translateY(-2px);
+}
+
+.signup-link {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.signup-link a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.features-list {
+    color: white;
+    max-width: 400px;
+}
+
+.features-list h2 {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(10px);
+}
+
+.feature-item i {
+    font-size: 1.5rem;
+}
+
+.feature-item h3 {
+    margin-bottom: 0.25rem;
+}
+
+.feature-item p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.875rem;
+}
+
+@media (max-width: 968
+</style>
+</head>
+<body>
+    <div class="split-container">
+        <div class="left-panel">
+            <div class="auth-container">
+                <div class="logo-container">
+                    <i class="fas fa-check-circle logo-icon"></i>
+                    <h1>HabitFlow</h1>
+                </div>
+                <div class="auth-card">
+                    <h2>Welcome Back!</h2>
+                    <p class="auth-subtitle">Track your progress, achieve your goals</p>
+                    
+                    <form name="" method="post" action="/signin">
+                        {% csrf_token %} <!-- Include CSRF token for POST requests -->
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <div class="input-icon-wrapper">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" name="email" required placeholder="Enter your email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-icon-wrapper">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                            </div>
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" name="remember">
+                                <span class="checkmark"></span>
+                                Remember me
+                            </label>
+                            <a href="/forgot-password" class="forgot-password">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                    
+                    <div class="social-login">
+                        <p>Or continue with</p>
+                        <div class="social-buttons">
+                            <button class="social-btn google">
+                                <i class="fab fa-google"></i>
+                            </button>
+                            <button class="social-btn github">
+                                <i class="fab fa-github"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <p class="signup-link">
+                      Have an account? <a href="/login.html">login</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="right-panel">
+            <div class="features-list">
+                <h2>Why Choose HabitFlow?</h2>
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    <div>
+                        <h3>Track Progress</h3>
+                        <p>Visual insights into your daily achievements</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-bell"></i>
+                    <div>
+                        <h3>Smart Reminders</h3>
+                        <p>Never miss your daily habits</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-trophy"></i>
+                    <div>
+                        <h3>Achievement System</h3>
+                        <p>Earn rewards for consistency</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script> const express = require('express');
+const sqlite3 = require('sqlite3').verbose();
+const bcrypt = require('bcrypt');
+const session = require('express-session');
+const path = require('path');
+
+const app = express();
+
+// Create SQLite database connection
+const db = new sqlite3.Database('./users.db', (err) => {
+    if (err) {
+        console.error('Error connecting to database:', err);
+    } else {
+        console.log('Connected to SQLite database');
+    }
+});
+
+// Create users table if it doesn't exist
+db.run(`CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)`);
+
+// Middleware
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 } // 24 hours
+}));
+
+// Serve login page
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+// Register endpoint
+app.post('/register', async (req, res) => {
+    try {
+        const { username, email, password } = req.body;
+
+        // Check if user exists
+        db.get('SELECT * FROM users WHERE email = ? OR username = ?', [email, username], async (err, user) => {
+            if (err) {
+                console.error('Database error:', err);
+                return res.status(500).json({
+                    success: false,
+                    message: 'Database error during registration'
+                });
+            }
+
+            if (user) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Username or email already exists'
+                });
+            }
+
+            // Hash password
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            // Insert new user
+            db.run('INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
+                [username, email, hashedPassword],
+                (err) => {
+                    if (err) {
+                        console.error('Error creating user:', err);
+                        return res.status(500).json({
+                            success: false,
+                            message: 'Error during registration'
+                        });
+                    }
+
+                    res.json({
+                        success: true,
+                        message: 'Registration successful'
+                    });
+                });
+        });
+    } catch (error) {
+        console.error('Registration error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error during registration'
+        });
+    }
+});
+
+// Login endpoint
+app.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Find user by email
+        db.get('SELECT * FROM users WHERE email = ?', [email], async (err, user) => {
+            if (err) {
+                console.error('Database error:', err);
+                return res.status(500).json({
+                    success: false,
+                    message: 'Database error during login'
+                });
+            }
+
+            if (!user) {
+                return res.status(401).json({
+                    success: false,
+                    message: 'Invalid email or password'
+                });
+            }
+
+            // Check password
+            const validPassword = await bcrypt.compare(password, user.password);
+
+            if (!validPassword) {
+                return res.status(401).json({
+                    success: false,
+                    message: 'Invalid email or password'
+                });
+            }
+
+            // Set session
+            req.session.userId = user.id;
+
+            res.json({
+                success: true,
+                message: 'Login successful'
+            });
+        });
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error during login'
+        });
+    }
+});
+
+// Logout endpoint
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/login');
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
+
+// Clean up database connection on server shutdown
+process.on('SIGINT', () => {
+    db.close((err) => {
+        if (err) {
+            console.error('Error closing database:', err);
+        } else {
+            console.log('Database connection closed');
+        }
+        process.exit();
+    });
+});
+</script>
+</body>
+</html>
